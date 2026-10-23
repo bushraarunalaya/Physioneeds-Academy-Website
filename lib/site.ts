@@ -6,10 +6,10 @@ export const SITE = {
   email: "support@ephysioneeds.com",
 };
 export const NAV = [
-  { label: "Courses", href: "#catalogue" },
-  { label: "Blog", href: "https://www.e-physioneeds.com/blog" },
-  { label: "Eligibility", href: "https://www.e-physioneeds.com/s/pages/check" },
-  { label: "Webinars", href: "https://www.e-physioneeds.com/sessions#nav_bar" },
+  { label: "Courses", href: "/courses" },
+  { label: "Blog", href: "/blog" },
+  { label: "Eligibility", href: "/eligibility" },
+  { label: "Webinars", href: "/webinars" },
   { label: "Digital Products", href: "https://www.e-physioneeds.com/products#nav_bar" },
   { label: "Membership", href: "https://www.e-physioneeds.com/memberships" },
 ];

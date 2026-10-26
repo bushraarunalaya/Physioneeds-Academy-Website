@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { gsap } from "gsap";
 
@@ -9,14 +10,29 @@ type Webinar = {
   speaker: string;
   date: string;
   time: string;
-  format: "Live" | "Masterclass" | "Conversation";
+  // format: "Live" | "Masterclass" | "Conversation";
   topic: string;
+  image: string;
   status: "upcoming" | "past";
   href: string;
 };
 
-// Add future sessions here. The filters and cards below will update automatically.
-const webinars: Webinar[] = [];
+// Keep this list aligned with the live academy schedule. The filters and cards
+// below update automatically as more sessions are added.
+const webinars: Webinar[] = [
+  {
+    id: "orientation-class",
+    title: "Orientation Class",
+    speaker: "PhysioNeeds Academy Faculty",
+    date: "9 November 2025",
+    time: "05:00 PM to 06:30 PM ",
+    // format: "",
+    topic: "",
+    image: "https://d502jbuhuh9wk.cloudfront.net/orgData/62bd97c60cf2f0525dc732d0/liveSessions/NP5EKtME-pqu9-pXlt-uM4V-oZDoyTtvyAkTPaGk-dj2RttgSmSIS/cover/fLsqv/2025-11-09T09:37:10.921Z.jpg",
+    status: "upcoming",
+    href: "https://www.e-physioneeds.com/#masterclass",
+  },
+];
 
 const formats = [
   { number: "01", label: "Clinical masterclasses", text: "Go beyond the textbook with focused, practical teaching." },
@@ -53,7 +69,7 @@ export default function WebinarHub() {
       <section className="webinar-library" id="webinar-library">
         <div className="webinar-library-head"><div><p className="eyebrow">Explore the sessions</p><h2>What&apos;s happening</h2></div><label className="webinar-search"><span>⌕</span><input aria-label="Search webinars" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search sessions..." /></label></div>
         <div className="webinar-tabs" role="tablist" aria-label="Webinar status"><button className={filter === "upcoming" ? "active" : ""} onClick={() => setFilter("upcoming")} role="tab" aria-selected={filter === "upcoming"}>Upcoming <i>{webinars.filter((item) => item.status === "upcoming").length}</i></button><button className={filter === "past" ? "active" : ""} onClick={() => setFilter("past")} role="tab" aria-selected={filter === "past"}>Past <i>{webinars.filter((item) => item.status === "past").length}</i></button><button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")} role="tab" aria-selected={filter === "all"}>All <i>{webinars.length}</i></button></div>
-        {visible.length ? <div className="webinar-grid">{visible.map((item) => <a className="webinar-card webinar-reveal" href={item.href} key={item.id}><div className="webinar-card-top"><span>{item.format}</span><small>{item.status === "upcoming" ? "Reserve your place" : "Watch replay"}</small></div><div className="webinar-card-art"><span>PN</span><b>{item.topic}</b></div><div className="webinar-card-body"><p>{item.date} <i>·</i> {item.time}</p><h3>{item.title}</h3><small>With {item.speaker}</small><strong>View session <Arrow /></strong></div></a>)}</div> : <div className="webinar-empty webinar-reveal"><div className="webinar-empty-mark"><span /><span /><span /></div><p className="eyebrow">{filter === "past" ? "The archive is just beginning" : "The next session is taking shape"}</p><h3>{filter === "past" ? "No replays yet." : "Be first in the room."}</h3><p>{normalized ? "No session matches that search. Try another topic." : "We’re curating the next practical conversation for our learning community. Leave your details and we’ll let you know when registration opens."}</p><a href="#notify" className="btn btn-dark">Notify me <Arrow /></a></div>}
+        {visible.length ? <div className="webinar-grid">{visible.map((item) => <a className="webinar-card webinar-reveal" href={item.href} key={item.id}><div className="webinar-card-top"><small>{item.status === "upcoming" ? "" : "Watch replay"}</small></div><div className="webinar-card-art"><Image src={item.image} alt={item.title} fill sizes="(max-width: 760px) 90vw, 420px" /><b>{item.topic}</b></div><div className="webinar-card-body"><p>{item.date} <i>·</i> {item.time}</p><h3>{item.title}</h3><small>With {item.speaker}</small><strong>View session <Arrow /></strong></div></a>)}</div> : <div className="webinar-empty webinar-reveal"><div className="webinar-empty-mark"><span /><span /><span /></div><p className="eyebrow">{filter === "past" ? "The archive is just beginning" : "The next session is taking shape"}</p><h3>{filter === "past" ? "No replays yet." : "Be first in the room."}</h3><p>{normalized ? "No session matches that search. Try another topic." : "We’re curating the next practical conversation for our learning community. Leave your details and we’ll let you know when registration opens."}</p><a href="#notify" className="btn btn-dark">Notify me <Arrow /></a></div>}
       </section>
       <section className="webinar-formats"><div className="webinar-formats-head"><div><p className="eyebrow">Designed for real practice</p><h2>There&apos;s always<br /><em>something to take away.</em></h2></div><p>Clear ideas. Generous experts. A useful next step.</p></div><div className="webinar-format-grid">{formats.map((item) => <article className="webinar-format" key={item.number}><span>{item.number}</span><div><h3>{item.label}</h3><p>{item.text}</p></div><Arrow /></article>)}</div></section>
       <section className="webinar-notify" id="notify"><div><p className="eyebrow">Never miss the good stuff</p><h2>Keep a seat open<br />for your next idea.</h2><p>We&apos;ll only send you the sessions worth showing up for.</p></div><form onSubmit={(event) => event.preventDefault()}><label htmlFor="webinar-email">Your email address</label><div><input id="webinar-email" type="email" required placeholder="you@example.com" /><button className="btn btn-gold" type="submit">Keep me posted <Arrow /></button></div></form></section>

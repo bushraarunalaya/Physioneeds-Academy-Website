@@ -10,6 +10,6 @@ export const NAV = [
   { label: "Blog", href: "/blog" },
   { label: "Eligibility", href: "/eligibility" },
   { label: "Webinars", href: "/webinars" },
-  { label: "Digital Products", href: "https://www.e-physioneeds.com/products#nav_bar" },
+  { label: "Digital Products", href: "/products" },
   { label: "Membership", href: "https://www.e-physioneeds.com/memberships" },
 ];
